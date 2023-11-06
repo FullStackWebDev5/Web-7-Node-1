@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false })) 
+// will be discussed in depth later
 
 const USERS = [
   {
@@ -65,6 +68,15 @@ app.get('/about', (req, res) => {
 
 app.get('/download-logo', (req, res) => {
   res.download(__dirname + '/instagram-logo.png')
+})
+
+app.get('/register', (req, res) => {
+  res.sendFile(__dirname + '/register.html')
+})
+
+app.post('/api/register', (req, res) => {
+  const { firstName, lastName } = req.body
+  res.send(firstName + ' ' + lastName)
 })
 
 app.listen(3000, () => {
